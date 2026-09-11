@@ -1,0 +1,78 @@
+{
+  "overall_score": 100.0,
+  "dimension_scores": {
+    "Entity Accuracy": {
+      "dimension_name": "Entity Accuracy",
+      "weight": 0.2,
+      "base_score": 100.0,
+      "deductions": 0.0,
+      "final_score": 100.0,
+      "issues_count": 0,
+      "issues": []
+    },
+    "Completeness": {
+      "dimension_name": "Completeness",
+      "weight": 0.15,
+      "base_score": 100.0,
+      "deductions": 0.0,
+      "final_score": 100.0,
+      "issues_count": 0,
+      "issues": []
+    },
+    "Structure": {
+      "dimension_name": "Structure",
+      "weight": 0.15,
+      "base_score": 100.0,
+      "deductions": 0.0,
+      "final_score": 100.0,
+      "issues_count": 0,
+      "issues": []
+    },
+    "Consistency": {
+      "dimension_name": "Consistency",
+      "weight": 0.15,
+      "base_score": 100.0,
+      "deductions": 0.0,
+      "final_score": 100.0,
+      "issues_count": 0,
+      "issues": []
+    },
+    "Template Fidelity": {
+      "dimension_name": "Template Fidelity",
+      "weight": 0.15,
+      "base_score": 100.0,
+      "deductions": 0.0,
+      "final_score": 100.0,
+      "issues_count": 0,
+      "issues": []
+    },
+    "Hallucination": {
+      "dimension_name": "Hallucination",
+      "weight": 0.2,
+      "base_score": 100.0,
+      "deductions": 0.0,
+      "final_score": 100.0,
+      "issues_count": 0,
+      "issues": []
+    }
+  },
+  "all_issues": [],
+  "summary_explanation": "Overall score 100.0/100 calculated across 6 dimensions using transparent deterministic deductions and semantic grounding verification.",
+  "scoring_breakdown": [
+    "Entity Accuracy: base 100.0 - deductions 0.0 = 100.0 (weight 0.20 -> 20.00 pts)",
+    "Completeness: base 100.0 - deductions 0.0 = 100.0 (weight 0.15 -> 15.00 pts)",
+    "Structure: base 100.0 - deductions 0.0 = 100.0 (weight 0.15 -> 15.00 pts)",
+    "Consistency: base 100.0 - deductions 0.0 = 100.0 (weight 0.15 -> 15.00 pts)",
+    "Template Fidelity: base 100.0 - deductions 0.0 = 100.0 (weight 0.15 -> 15.00 pts)",
+    "Hallucination: base 100.0 - deductions 0.0 = 100.0 (weight 0.20 -> 20.00 pts)"
+  ],
+  "document_metadata": {
+    "case_number": "1847",
+    "year": "2026",
+    "petitioner": "Sunrise Housing Private Limited",
+    "answering_respondent": "Respondent No. 2",
+    "body_paragraph_count": "7",
+    "verification_range": "paragraphs 1 to 7",
+    "semantic_mode": "mock (deterministic)"
+  }
+}
