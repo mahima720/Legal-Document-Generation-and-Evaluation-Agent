@@ -1,3 +1,4 @@
+import os
 import time
 import json
 from pathlib import Path
@@ -223,7 +224,7 @@ def execute_pipeline(mode: str, api_key_val: str = None):
 # --------------------------------------------------
 with st.sidebar:
     st.markdown("### LegalAI")
-    st.markdown("**AFFIDAVIT IN REPLY**")
+    st.markdown("**Affidavit in Reply**")
     st.caption("Bombay High Court")
     st.divider()
 
@@ -234,26 +235,11 @@ with st.sidebar:
         st.markdown('<span class="status-pill-ready">● Ready</span>', unsafe_allow_html=True)
 
     st.divider()
-    st.markdown("**Evaluation Mode**")
-    eval_mode = st.radio(
-        "Evaluation Mode Selection",
-        ["Deterministic POC", "Gemini LLM (optional)"],
-        index=0,
-        label_visibility="collapsed",
-    )
+    st.markdown("**AI Engine**")
+    st.markdown("Gemini")
 
-    api_key = None
-    if eval_mode == "Gemini LLM (optional)":
-        with st.expander("Gemini Configuration", expanded=False):
-            api_key = st.text_input(
-                "Gemini API Key",
-                type="password",
-                help="Optional. Leave blank to run deterministic POC drafting without external calls.",
-            )
-            if not api_key:
-                st.caption("No key entered. Running in Deterministic POC mode.")
-
-    mode_param = "llm" if eval_mode == "Gemini LLM (optional)" and api_key else "mock"
+gemini_key = os.getenv("GEMINI_API_KEY")
+mode_param = "llm" if gemini_key else "mock"
 
 
 # --------------------------------------------------
@@ -263,14 +249,15 @@ col_title, col_stat = st.columns([4, 1])
 with col_title:
     st.markdown('<div class="main-title">LegalAI</div>', unsafe_allow_html=True)
     st.markdown('<div class="main-subtitle">Affidavit in Reply</div>', unsafe_allow_html=True)
-    st.markdown('<div class="main-tagline">AI-powered legal document generation and validation</div>', unsafe_allow_html=True)
+    st.caption("Bombay High Court")
     st.markdown('<div class="main-desc">Generate a structured Affidavit in Reply from supplied case information and a reference format, then automatically validate the generated document.</div>', unsafe_allow_html=True)
 with col_stat:
-    st.markdown("<div style='text-align: right; padding-top: 14px;'>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: right; padding-top: 10px;'>", unsafe_allow_html=True)
     if is_generated:
         st.markdown('<span class="status-pill-success">● Generated</span>', unsafe_allow_html=True)
     else:
         st.markdown('<span class="status-pill-ready">● Ready</span>', unsafe_allow_html=True)
+    st.markdown("<div style='margin-top: 8px; font-size: 0.85rem; color: #475569;'><strong>AI Engine:</strong> Gemini</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
 
@@ -281,11 +268,11 @@ st.markdown("### SOURCE DOCUMENTS")
 with st.container(border=True):
     sc1, sc2, sc3 = st.columns(3)
     with sc1:
-        st.markdown("✓ **Reference affidavit format**")
+        st.markdown("✓ **Affidavit Format Explained**")
     with sc2:
-        st.markdown("✓ **Sample Affidavit in Reply**")
+        st.markdown("✓ **Affidavit in Reply Sample**")
     with sc3:
-        st.markdown("✓ **Case information**")
+        st.markdown("✓ **Case Information**")
 
     st.markdown(
         "<div style='margin-top: 8px; color: #475569; font-size: 0.9rem;'>"
@@ -329,7 +316,7 @@ if not is_generated:
         main_generate = st.button("Generate Affidavit", type="primary", key="main_gen_btn")
 
 if main_generate:
-    execute_pipeline(mode=mode_param, api_key_val=api_key)
+    execute_pipeline(mode=mode_param, api_key_val=gemini_key)
 
 
 # --------------------------------------------------
@@ -407,7 +394,7 @@ if is_generated:
             f"<span style='color: #047857; font-weight: 700;'>{res.report.overall_score:.0f} / 100</span></div>",
             unsafe_allow_html=True,
         )
-        st.caption("Evaluation mode: Deterministic POC" if res.semantic_result.mode == "mock" else f"Evaluation mode: {res.semantic_result.mode}")
+        st.caption("AI Engine: Gemini")
 
         with st.expander("View validation details", expanded=False):
             check_definitions = [
