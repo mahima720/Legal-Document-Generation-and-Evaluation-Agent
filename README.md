@@ -4,6 +4,9 @@ AI-powered document generation and evaluation system that uses supplied referenc
 
 ---
 
+# 🔗 Live Demo
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://legal-document-generation-and-evaluation-agent.streamlit.app/)
+
 ## 1. Executive Summary & Problem Statement
 
 Drafting formal court pleadings in Indian High Courts requires strict adherence to jurisdictional conventions, statutory formatting rules, and factual precision. In High Court writ practice (such as Bombay High Court Ordinary Original Civil Jurisdiction), minor structural or factual defects can lead to office objections, delays, or procedural dismissals.
@@ -85,8 +88,6 @@ flowchart TD
 | **Case Field Structuring** | Deterministic Regex + Pydantic | Guarantees exact case numbers, parties, dates, and addresses. |
 | **Legal Move Mapping** | Semantic / Heuristic Engine | Maps narrative reply points to court moves (`SUBSTANTIVE_ANSWER`, `BLANKET_DENIAL`, etc.) with full source provenance. |
 | **Pre-Generation Checks** | Deterministic Python | Halts pipeline if critical fields (forum, case number, prayer, deponent) are absent. |
-| **Drafting (Mock Mode)** | Deterministic Legal Compiler | Zero-token, 100% reproducible drafting faithful to High Court conventions without requiring API keys. |
-| **Drafting (LLM Mode)** | LLM Provider Abstraction | Synthesizes natural legal prose grounded strictly in the provided `ContentPlan`. |
 | **Court Typography & DOCX** | Deterministic (`python-docx`) | Strict formatting: Book Antiqua 12pt, 1.5 line spacing, 1-inch margins, right-aligned status tags and jurats. |
 | **Invariant Validation (10 Checks)** | Deterministic Rule Engine | Inspects the generated artifact; checks ordering, numbers, names, and dynamic verification range. |
 | **Hallucination & Grounding Scan** | Semantic Auditor | Asserts facts in draft originate only from `03_Case_Information.pdf` and no sample data leaked from `02`. |
@@ -142,7 +143,6 @@ Launch the interactive reviewer dashboard:
 streamlit run app.py
 ```
 The application opens in your default browser at `http://localhost:8501`:
-- **Sidebar:** Select between **Mock Mode** (default, no API key needed) and **LLM Provider Mode** (optional API key input).
 - **Document Inspector:** Review ground-truth case fields extracted from `03_Case_Information.pdf`.
 - **Content Plan & Provenance:** Interactive table mapping each reply point to its target paragraph and source file.
 - **Pre & Post Validation:** Live status of all 10 deterministic invariant checks.
