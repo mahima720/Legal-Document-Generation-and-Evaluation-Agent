@@ -190,6 +190,20 @@ def render_document_preview_html(doc) -> str:
 
 
 # --------------------------------------------------
+# API Key Helper
+# --------------------------------------------------
+def get_gemini_api_key():
+    """Read Gemini API key from Streamlit Secrets or environment."""
+    try:
+        if "GEMINI_API_KEY" in st.secrets:
+            return st.secrets["GEMINI_API_KEY"]
+    except Exception:
+        pass
+
+    return os.getenv("GEMINI_API_KEY")
+
+
+# --------------------------------------------------
 # Execution Runner Function
 # --------------------------------------------------
 def execute_pipeline(mode: str, api_key_val: str = None):
@@ -244,8 +258,12 @@ with st.sidebar:
         st.markdown('<span class="status-pill-ready">● Ready</span>', unsafe_allow_html=True)
 
     st.divider()
+
     st.markdown("**AI Engine**")
     st.markdown("Gemini")
+
+    st.markdown("**Evaluation**")
+    st.markdown("Hybrid")
 
 
 # --------------------------------------------------
@@ -322,9 +340,9 @@ if not is_generated:
         main_generate = st.button("Generate Affidavit", type="primary", key="main_gen_btn")
 
 if main_generate:
-    gemini_key = os.getenv("GEMINI_API_KEY")
+    gemini_key = get_gemini_api_key()
     if not gemini_key:
-        st.error("Gemini API configuration is unavailable. Please configure GEMINI_API_KEY before generating the affidavit.")
+        st.error("Gemini API configuration is unavailable. Please configure GEMINI_API_KEY in Streamlit Secrets.")
     else:
         execute_pipeline(mode="llm", api_key_val=gemini_key)
 

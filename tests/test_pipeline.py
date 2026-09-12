@@ -186,3 +186,33 @@ def test_pipeline_llm_mode_gemini_success(tmp_path):
         assert not result.semantic_result.hallucination_detected
         assert result.semantic_result.mode == "llm (provider verified)"
 
+
+def test_get_gemini_api_key_from_secrets(monkeypatch):
+    """Verifies that get_gemini_api_key correctly reads from Streamlit Secrets."""
+    import streamlit as st
+    from app import get_gemini_api_key
+
+    with patch.object(st, "secrets", {"GEMINI_API_KEY": "secret_key_value"}):
+        monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+        assert get_gemini_api_key() == "secret_key_value"
+
+
+def test_get_gemini_api_key_from_env_fallback(monkeypatch):
+    """Verifies that get_gemini_api_key falls back to os.environ when st.secrets has no key."""
+    import streamlit as st
+    from app import get_gemini_api_key
+
+    with patch.object(st, "secrets", {}):
+        monkeypatch.setenv("GEMINI_API_KEY", "env_key_value")
+        assert get_gemini_api_key() == "env_key_value"
+
+
+def test_get_gemini_api_key_returns_none_when_unset(monkeypatch):
+    """Verifies that get_gemini_api_key returns None when neither secrets nor env is set."""
+    import streamlit as st
+    from app import get_gemini_api_key
+
+    with patch.object(st, "secrets", {}):
+        monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+        assert get_gemini_api_key() is None
+
