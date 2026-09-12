@@ -193,22 +193,31 @@ def render_document_preview_html(doc) -> str:
 # Execution Runner Function
 # --------------------------------------------------
 def execute_pipeline(mode: str, api_key_val: str = None):
-    with st.status("Generating Affidavit...", expanded=True) as status:
+    with st.status("Generating Affidavit with Gemini...", expanded=True) as status:
         st.write("Analyzing reference format ✓")
         time.sleep(0.12)
         st.write("Extracting case information ✓")
         time.sleep(0.12)
         st.write("Mapping reply points ✓")
         time.sleep(0.12)
-        st.write("Generating affidavit ✓")
+        st.write("Generating affidavit with Gemini LLM ✓")
         pipeline_output = run_legal_document_pipeline(
             case_pdf_path=FILE_CASE_INFO,
             mode=mode,
             api_key=api_key_val,
         )
-        st.write("Running validation ✓")
+        if not pipeline_output.success:
+            status.update(
+                label="Affidavit Generation Failed",
+                state="error",
+                expanded=True,
+            )
+            st.error(pipeline_output.error_message or "Affidavit generation failed.")
+            return
+
+        st.write("Running validation checks ✓")
         time.sleep(0.12)
-        st.write("Evaluating output ✓")
+        st.write("Evaluating semantic grounding ✓")
         time.sleep(0.12)
         status.update(
             label="Affidavit Generated Successfully ✓",
@@ -237,9 +246,6 @@ with st.sidebar:
     st.divider()
     st.markdown("**AI Engine**")
     st.markdown("Gemini")
-
-gemini_key = os.getenv("GEMINI_API_KEY")
-mode_param = "llm" if gemini_key else "mock"
 
 
 # --------------------------------------------------
@@ -316,7 +322,11 @@ if not is_generated:
         main_generate = st.button("Generate Affidavit", type="primary", key="main_gen_btn")
 
 if main_generate:
-    execute_pipeline(mode=mode_param, api_key_val=gemini_key)
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    if not gemini_key:
+        st.error("Gemini API configuration is unavailable. Please configure GEMINI_API_KEY before generating the affidavit.")
+    else:
+        execute_pipeline(mode="llm", api_key_val=gemini_key)
 
 
 # --------------------------------------------------

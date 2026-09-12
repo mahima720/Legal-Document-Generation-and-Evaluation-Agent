@@ -82,7 +82,24 @@ def run_legal_document_pipeline(
 
     # 4. Generation
     drafter = AffidavitDrafter()
-    doc_ir = drafter.draft(content_plan, mode=mode, api_key=api_key)
+    try:
+        doc_ir = drafter.draft(content_plan, mode=mode, api_key=api_key)
+    except Exception as e:
+        return PipelineResult(
+            success=False,
+            case_info=case_info,
+            template=template,
+            content_plan=content_plan,
+            pre_validation=pre_val,
+            document_ir=None,
+            docx_path=None,
+            det_issues=[],
+            semantic_result=None,
+            report=None,
+            json_report_path=None,
+            md_report_path=None,
+            error_message=f"Generation failed: {str(e)}",
+        )
 
     # 5. DOCX Rendering
     docx_path = output_dir / "generated_affidavit.docx"
