@@ -39,12 +39,13 @@ class SemanticAuditor:
         mode: str = "mock",
         api_key: Optional[str] = None,
     ) -> SemanticEvaluationResult:
-        if mode.lower() == "llm" and (api_key or os.getenv("GEMINI_API_KEY") or os.getenv("OPENAI_API_KEY")):
+        key = api_key or os.getenv("GEMINI_API_KEY")
+        if mode.lower() == "llm" and key:
             try:
-                return self._evaluate_llm(doc, case_info, content_plan, api_key)
+                return self._evaluate_llm(doc, case_info, content_plan, key)
             except Exception:
                 return self._evaluate_deterministic(doc, case_info, content_plan, mode_label="mock (llm fallback)")
-        
+
         return self._evaluate_deterministic(doc, case_info, content_plan, mode_label="mock (deterministic)")
 
     def _evaluate_deterministic(

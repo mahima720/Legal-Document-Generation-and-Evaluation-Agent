@@ -216,3 +216,23 @@ def test_get_gemini_api_key_returns_none_when_unset(monkeypatch):
         monkeypatch.delenv("GEMINI_API_KEY", raising=False)
         assert get_gemini_api_key() is None
 
+
+def test_get_gemini_api_key_nested_and_formatting(monkeypatch):
+    """Verifies that get_gemini_api_key handles nested sections and strips quotes/spaces."""
+    import streamlit as st
+    from app import get_gemini_api_key
+
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+
+    # Test lowercase key
+    with patch.object(st, "secrets", {"gemini_api_key": "lower_secret"}):
+        assert get_gemini_api_key() == "lower_secret"
+
+    # Test nested section [gemini] api_key = "..."
+    with patch.object(st, "secrets", {"gemini": {"api_key": "nested_secret"}}):
+        assert get_gemini_api_key() == "nested_secret"
+
+    # Test stripping extra whitespace and quotes
+    with patch.object(st, "secrets", {"GEMINI_API_KEY": '  "padded_secret"  '}):
+        assert get_gemini_api_key() == "padded_secret"
+

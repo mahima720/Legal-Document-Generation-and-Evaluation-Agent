@@ -193,14 +193,56 @@ def render_document_preview_html(doc) -> str:
 # API Key Helper
 # --------------------------------------------------
 def get_gemini_api_key():
-    """Read Gemini API key from Streamlit Secrets or environment."""
-    try:
-        if "GEMINI_API_KEY" in st.secrets:
-            return st.secrets["GEMINI_API_KEY"]
-    except Exception:
-        pass
+    """
+    Read Gemini API key from Streamlit Secrets with fallback to environment.
+    Supports direct get, case-insensitive keys, and nested sections.
+    Never logs or exposes the key value.
+    """
+    key = None
 
-    return os.getenv("GEMINI_API_KEY")
+    # 1. Primary: Streamlit Cloud Secrets
+    try:
+        # Direct lookup as requested: st.secrets.get("GEMINI_API_KEY")
+        key = st.secrets.get("GEMINI_API_KEY")
+
+        # Fallback 1a: Check common variations/case in st.secrets
+        if not key:
+            for k in ("gemini_api_key", "GOOGLE_API_KEY", "google_api_key"):
+                val = st.secrets.get(k)
+                if val:
+                    key = val
+                    break
+
+        # Fallback 1b: Check nested sections (e.g. [gemini] or [general])
+        if not key:
+            for section_name in st.secrets:
+                try:
+                    section = st.secrets.get(section_name)
+                    if isinstance(section, dict) or hasattr(section, "get"):
+                        val = (
+                            section.get("GEMINI_API_KEY")
+                            or section.get("gemini_api_key")
+                            or section.get("api_key")
+                        )
+                        if val:
+                            key = val
+                            break
+                except Exception:
+                    continue
+    except Exception:
+        key = None
+
+    # 2. Secondary: Environment variable (for local dev/testing)
+    if not key:
+        key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+
+    # Clean whitespace or extraneous quotes if present
+    if key and isinstance(key, str):
+        cleaned = key.strip().strip('"').strip("'")
+        if cleaned:
+            return cleaned
+
+    return None
 
 
 # --------------------------------------------------
