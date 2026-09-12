@@ -1,9 +1,6 @@
 # Legal Document Generation & Evaluation Agent
 
-> **Bombay High Court Affidavit in Reply — Proof of Concept**  
-> AI Intern Assignment for Brainwonders  
-> **Author:** AI Intern Candidate  
-> **Tech Stack:** Python 3.13, Pydantic v2, python-docx, pypdf, Streamlit, Pytest  
+AI-powered document generation and evaluation system that uses supplied reference documents and case information to generate an Affidavit in Reply and validate the generated document for entity accuracy, completeness, structure, consistency, template fidelity, and hallucination.
 
 ---
 
