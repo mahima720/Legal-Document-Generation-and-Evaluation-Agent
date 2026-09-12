@@ -1,4 +1,4 @@
-﻿import time
+import time
 import json
 from pathlib import Path
 import streamlit as st
@@ -255,14 +255,6 @@ with st.sidebar:
 
     mode_param = "llm" if eval_mode == "Gemini LLM (optional)" and api_key else "mock"
 
-    st.divider()
-    sidebar_generate = st.button(
-        "Generate Affidavit",
-        type="primary",
-        use_container_width=True,
-        key="sidebar_gen_btn",
-    )
-
 
 # --------------------------------------------------
 # 1. HEADER
@@ -336,7 +328,7 @@ if not is_generated:
         st.markdown("**Ready to generate your Affidavit in Reply.**")
         main_generate = st.button("Generate Affidavit", type="primary", key="main_gen_btn")
 
-if sidebar_generate or main_generate:
+if main_generate:
     execute_pipeline(mode=mode_param, api_key_val=api_key)
 
 
@@ -369,7 +361,7 @@ if is_generated:
     st.markdown("### GENERATED DOCUMENT")
     col_prev_head, col_prev_dl = st.columns([3, 1])
     with col_prev_head:
-        st.caption("Visual preview reflecting the compiled Bombay High Court pleading format.")
+        st.caption("Preview of the generated Affidavit in Reply")
     with col_prev_dl:
         if res.docx_path and res.docx_path.exists():
             with open(res.docx_path, "rb") as f:
