@@ -7,7 +7,7 @@ AI-powered document generation and evaluation system that uses supplied referenc
 ## 🔗 Live Demo
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://legal-document-generation-and-evaluation-agent.streamlit.app/)
 
-**Demo Video:** [Watch Demo Video]("https://drive.google.com/file/d/14W6WOy9n5lmAgBwb_Jt0TFx30Bz6yJOL/view?usp=sharing")
+- **Demo Video:** [Watch Demo Video](https://drive.google.com/file/d/14W6WOy9n5lmAgBwb_Jt0TFx30Bz6yJOL/view?usp=sharing)
 
 ## 1. Executive Summary & Problem Statement
 
