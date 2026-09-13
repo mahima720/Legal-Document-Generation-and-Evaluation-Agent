@@ -4,8 +4,10 @@ AI-powered document generation and evaluation system that uses supplied referenc
 
 ---
 
-# 🔗 Live Demo
+## 🔗 Live Demo
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://legal-document-generation-and-evaluation-agent.streamlit.app/)
+
+**Demo Video:** [Watch Demo Video]("C:\Users\mahim\Videos\project.mp4")
 
 ## 1. Executive Summary & Problem Statement
 
@@ -241,8 +243,18 @@ tests/
 
 ---
 
+# The Streamlit interface provides:
+
+- Source document overview
+- Case information overview
+- Affidavit generation using Gemini
+- Generated document preview
+- Hybrid validation and evaluation
+- Downloadable generated artifacts
+
+---
 ## 11. AI Assistance Disclosure
 
 In compliance with the assignment instructions:
 - **AI Coding Assistant:** This project was developed with the assistance of Antigravity (Google DeepMind Advanced Agentic Coding).
-- **Engineering Responsibility:** Architecture design, schema modeling, invariant checks, deterministic rules, test fixtures, negative mutation scenarios, and pipeline integration were conceived, verified, and reviewed by the candidate.
+- **Engineering Responsibility:** Architecture design, schema modeling, invariant checks, deterministic rules, test fixtures, negative mutation scenarios, and pipeline integration were conceived, verified, and reviewed by me.
