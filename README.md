@@ -7,8 +7,9 @@ AI-powered document generation and evaluation system that uses supplied referenc
 ## 🔗 Live Demo
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://legal-document-generation-and-evaluation-agent.streamlit.app/)
 
-- **Demo Video:** [Watch Demo Video](https://drive.google.com/file/d/14W6WOy9n5lmAgBwb_Jt0TFx30Bz6yJOL/view?usp=sharing)
+- **Demo Video:** [Watch Demo Video](https://drive.google.com/file/d/1Xg3Lpi7eWzuQNp0lVyn14qIF0lbOuf-Y/view?usp=sharing)
 
+- **GitHub Repository:** [View Source Code](https://github.com/mahima720/Legal-Document-Generation-and-Evaluation-Agent/blob/main/app.py)
 ## 1. Executive Summary & Problem Statement
 
 Drafting formal court pleadings in Indian High Courts requires strict adherence to jurisdictional conventions, statutory formatting rules, and factual precision. In High Court writ practice (such as Bombay High Court Ordinary Original Civil Jurisdiction), minor structural or factual defects can lead to office objections, delays, or procedural dismissals.
